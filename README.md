@@ -4,7 +4,7 @@ Lightweight jQuery plugin for lazy loading images and other content.
 ## Example
 
 ```js
-$('img.lazyLoad').lazy({
+$('img.lazyLoad').lazyload({
 	onload: function(el, imgUrl) {
 		$(this).addClass('loaded');
 	},
