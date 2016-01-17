@@ -1,0 +1,25 @@
+{
+  "name": "jquery.lazyload",
+  "version": "1.0",
+  "homepage": "https://github.com/skipperbent/jquery.lazyload.git",
+  "authors": [
+    "Simon Sessingø <simon.sessingoe@gmail.com>"
+  ],
+  "description": "Lightweight jQuery plugin for lazy loading images and other content.",
+  "main": "jquery.lazyload.js",
+  "keywords": [
+    "jquery",
+    "lazyload",
+    "images",
+	"image",
+	"inview"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
