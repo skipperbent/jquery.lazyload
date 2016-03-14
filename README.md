@@ -14,8 +14,31 @@ $('img.lazyLoad').lazyload({
 });
 ```
 
+## Options
+
+### onload
+Event fires when element loads
+
+### onerror
+Event fires if element failes to load
+
+### dataAttribute
+If element is not an image, select the data-attribute that contains the image-url. Defaults: ```img```.
+
 ## Lazyload visible content
 You can lazyload images that are currently inview and prevent unwanted bandwidth usage, by combining the jquery.inview plugin.
+
+## Custom loading
+
+```js
+var ll = new lazyload({
+    // options
+});
+
+ll.preload('url');
+
+ll.preloadElement(el);
+```
 
 [Visit jquery.inview plugin on GitHub](https://github.com/protonet/jquery.inview)
 
@@ -51,7 +74,11 @@ $(document).off('inview.blog.lazyload').on('inview.blog.lazyload', '#main .entry
 ```
 
 ## Users
+
+Thanks to all who contribute or use the small plugin :)
+
 - http://www.annijor.no
+- http://www.holla.dk
 
 ## The MIT License (MIT)
 
