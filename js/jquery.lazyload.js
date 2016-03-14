@@ -1,60 +1,76 @@
 /**
  * Lazy load plugin for jQuery.
  *
- * Usage:
- * $('img.lazyLoad').lazy({
- *      onload: function(el, imgUrl) {
- *          $(this).addClass('loaded');
- *      },
- *      onerror: function(e) {
- *
- *      }
- * });
- *
- * @author Simon Sessingø
- * @version 1.1
+ * @author Simon SessingÃ¸
+ * @version 2.0
  */
 
-(function($) {
-    var preload = function(imgUrl, loadCallback, errorCallback) {
+function lazyload(options) {
+    this.init(options);
+}
+
+lazyload.prototype = {
+    options: {
+        onload: null,
+        onerror: null,
+        dataAttribute: 'img'
+    },
+    init: function(options) {
+        this.options = $.extend(this.options, options);
+    },
+    preloadElement: function(el) {
+        var self = this;
+        var imgUrl = '';
+        var isImage = false;
+
+        if(el.get(0).tagName.toLowerCase() == 'img') {
+            imgUrl = el.attr('src');
+            $(this).removeAttr('src');
+            isImage = true;
+        } else {
+            imgUrl = el.data(self.options.dataAttribute);
+        }
+
+        this.preload(imgUrl, {
+            load: function() {
+                if(isImage) {
+                    el.attr('src', imgUrl);
+                }
+                if(self.options.onload != null) {
+                    self.options.onload(el, imgUrl, self);
+                }
+            },
+            error: function() {
+                if(self.options.onerror != null) {
+                    self.options.onerror(el, e, self);
+                }
+            }
+        });
+    },
+    preload: function(imgUrl, options) {
+        var self = this;
         var img = $('<img/>').attr('src', imgUrl).hide().load(function() {
             $(this).remove();
-            loadCallback();
+            if(options.load != null) {
+                options.load();
+            }
         }).error(function(e) {
             $(this).remove();
-            if(errorCallback != null) {
-                errorCallback(e);
+            if(options.error != null) {
+                options.error(e);
             }
         });
         $('body').append(img);
-    };
+    }
+};
 
-    var defaultOptions = { onload: null, onerror: null };
+(function($) {
 
     $.fn.lazyload = function(options) {
         var el = $(this);
-        var options = $.extend(this.options, options);
+        var ll = new lazyload(options);
         el.each(function() {
-            var self = $(this);
-            var imgUrl = '';
-            var isImage = false;
-            if(self.get(0).tagName.toLowerCase() == 'img') {
-                imgUrl = self.attr('src');
-                $(this).removeAttr('src');
-                isImage = true;
-            } else {
-                imgUrl = self.data('img');
-            }
-
-            preload(imgUrl, function() {
-                if(isImage) {
-                    self.attr('src', imgUrl);
-                }
-
-                if(options.onload != null) {
-                    options.onload(self, imgUrl);
-                }
-            }, options.onerror);
+            ll.preloadElement($(this));
         });
     };
 }(jQuery));
