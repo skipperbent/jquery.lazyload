@@ -26,7 +26,7 @@ Event fires if element failes to load
 If element is not an image, select the data-attribute that contains the image-url. Defaults: ```img```.
 
 ## Lazyload visible content
-You can lazyload images that are currently inview and prevent unwanted bandwidth usage, by combining the jquery.inview plugin.
+You can lazyload images that are currently inview and prevent unwanted bandwidth usage, by combining the jquery.inview plugin. The follow script will fade-in images, that has been hidden and only show them when they have been preloaded by our script.
 
 ## Custom loading
 
